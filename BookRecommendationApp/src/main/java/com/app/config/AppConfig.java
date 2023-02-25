@@ -54,6 +54,7 @@ public class AppConfig {
 		.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 		.authorizeHttpRequests()
+//		.requestMatchers("/swagger-ui*/**","/v3/api-docs/**").permitAll()
 //		.requestMatchers(HttpMethod.POST, "/customers")
 //		.permitAll().anyRequest()
 //		.authenticated()
