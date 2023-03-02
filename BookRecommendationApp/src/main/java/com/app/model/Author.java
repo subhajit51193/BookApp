@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,8 +31,8 @@ public class Author {
 	@OneToMany(mappedBy = "author")
 	private Set<Book> publishedBooks;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private Set<Customer> customers = new HashSet<>();
+	@ManyToMany(mappedBy = "authors")
+	private Set<Customer> customers;
 
 	@Override
 	public int hashCode() {

@@ -47,8 +47,18 @@ public class Customer {
 	private List<Authority> authorities = new ArrayList<>();
 	
 	@ManyToMany
-	@JoinTable(name = "Customers_Books")
+	@JoinTable(
+			name = "Customer_Book",
+			joinColumns = @JoinColumn(name = "customerId"),
+			inverseJoinColumns = @JoinColumn(name = "bookId"))
 	private Set<Book> books;
+	
+	@ManyToMany
+	@JoinTable(
+			name = "Customer_Author",
+			joinColumns = @JoinColumn(name = "customerId"),
+			inverseJoinColumns = @JoinColumn(name = "authorId"))
+	private Set<Author> authors;
 
 	@Override
 	public int hashCode() {
