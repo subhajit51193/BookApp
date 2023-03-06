@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.model.Book;
 import com.app.model.Customer;
+import com.app.service.BookService;
 import com.app.service.CustomerService;
 
 import jakarta.websocket.server.PathParam;
@@ -33,6 +35,11 @@ public class CustomerController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+
+//	-----------------------------------------
+	@Autowired
+	private BookService bookService;
+//-------------------------------------------
 	
 	@GetMapping("/hello")
 	public String testHandler() {
@@ -92,6 +99,12 @@ public class CustomerController {
 		return new ResponseEntity<>(customers,HttpStatus.ACCEPTED);
 		
 	}
+	
+//	-------------------------------------------------------------------------------
+//	-------------------------------------------------------------------------------
+//	-------------------------------------------------------------------------------
+	
+	
 	
 	
 	

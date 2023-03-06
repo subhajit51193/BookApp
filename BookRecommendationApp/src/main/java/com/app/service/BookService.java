@@ -5,5 +5,5 @@ import com.app.model.Book;
 
 public interface BookService {
 
-	public Book addNewBook(Book book)throws BookException;
+	public Book addNewBook(Book book);
 }
