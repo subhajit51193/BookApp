@@ -2,6 +2,7 @@ package com.app.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,4 +32,7 @@ public class Genre {
 	
 	@ManyToOne
 	private Book book;
+
+	
+	
 }

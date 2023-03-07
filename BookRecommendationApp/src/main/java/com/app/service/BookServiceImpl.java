@@ -1,6 +1,7 @@
 package com.app.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public Book addNewBook(Book book) {
 		
-		Set<Genre> set = book.getGenres();
+//		Set<Genre> set = book.getGenres();
+		List<Genre> set = book.getGenres();
 		for (Genre genre: set) {
 			genreRepository.save(genre);
 		}

@@ -51,33 +51,16 @@ public class Customer {
 			name = "Customer_Book",
 			joinColumns = @JoinColumn(name = "customerId"),
 			inverseJoinColumns = @JoinColumn(name = "bookId"))
-	private Set<Book> books;
+	private List<Book> books;
 	
 	@ManyToMany
 	@JoinTable(
 			name = "Customer_Author",
 			joinColumns = @JoinColumn(name = "customerId"),
 			inverseJoinColumns = @JoinColumn(name = "authorId"))
-	private Set<Author> authors;
+	private List<Author> authors;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(address, custId, email, name, password);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Customer other = (Customer) obj;
-		return Objects.equals(address, other.address) && Objects.equals(custId, other.custId)
-				&& Objects.equals(email, other.email) && Objects.equals(name, other.name)
-				&& Objects.equals(password, other.password);
-	}
 	
 	
 }

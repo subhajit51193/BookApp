@@ -37,32 +37,15 @@ public class Book {
 	private String description;
 	
 	@OneToMany(mappedBy = "book")
-	private Set<Genre> genres;
+	private List<Genre> genres;
 	
 	@ManyToMany(mappedBy = "books")
-	private Set<Customer> customers;
+	private List<Customer> customers;
 	
 	@ManyToOne
 	private Author author;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(author, bookId, bookName, description, pages, publishDate);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Book other = (Book) obj;
-		return Objects.equals(author, other.author) && Objects.equals(bookId, other.bookId)
-				&& Objects.equals(bookName, other.bookName) && Objects.equals(description, other.description)
-				&& Objects.equals(pages, other.pages) && Objects.equals(publishDate, other.publishDate);
-	}
+	
 	
 	
 }
