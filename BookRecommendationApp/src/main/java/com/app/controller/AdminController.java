@@ -3,6 +3,8 @@ package com.app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,8 @@ public class AdminController {
 	private BookService bookService;
 	
 	@PostMapping("/addBook")
+//	@Secured("ROLE_ADMIN")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Book> addBookhandler(@RequestBody Book book){
 		Book addedBook = bookService.addNewBook(book);
 		return new ResponseEntity<Book>(addedBook,HttpStatus.ACCEPTED);

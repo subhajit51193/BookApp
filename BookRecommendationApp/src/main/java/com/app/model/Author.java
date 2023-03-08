@@ -1,9 +1,12 @@
 package com.app.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -29,11 +32,13 @@ public class Author {
 	
 	private Long followers=(long)0;
 	
-	@OneToMany(mappedBy = "author")
-	private List<Book> publishedBooks;
+	@JsonIgnore
+	@OneToMany(mappedBy = "author",fetch = FetchType.LAZY)
+	private List<Book> publishedBooks = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "authors")
-	private List<Customer> customers;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "authors",fetch = FetchType.LAZY)
+	private List<Customer> customers = new ArrayList<>();
 
 	
 

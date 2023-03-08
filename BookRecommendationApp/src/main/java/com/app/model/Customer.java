@@ -51,14 +51,14 @@ public class Customer {
 			name = "Customer_Book",
 			joinColumns = @JoinColumn(name = "customerId"),
 			inverseJoinColumns = @JoinColumn(name = "bookId"))
-	private List<Book> books;
+	private List<Book> books = new ArrayList<>();
 	
 	@ManyToMany
 	@JoinTable(
 			name = "Customer_Author",
 			joinColumns = @JoinColumn(name = "customerId"),
 			inverseJoinColumns = @JoinColumn(name = "authorId"))
-	private List<Author> authors;
+	private List<Author> authors = new ArrayList<>();
 
 
 	

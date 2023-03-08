@@ -1,13 +1,17 @@
 package com.app.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,8 +34,9 @@ public class Genre {
 	
 	private String description;
 	
-	@ManyToOne
-	private Book book;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "genres")
+	private List<Book> books = new ArrayList<>();
 
 	
 	

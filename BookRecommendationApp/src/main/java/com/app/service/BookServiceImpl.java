@@ -29,18 +29,20 @@ public class BookServiceImpl implements BookService{
 	
 	@Override
 	public Book addNewBook(Book book) {
+//		return book;
 		
-//		Set<Genre> set = book.getGenres();
-		List<Genre> set = book.getGenres();
-		for (Genre genre: set) {
+		List<Genre> genres = book.getGenres();
+		for (Genre genre: genres) {
+			genre.getBooks().add(book);
 			genreRepository.save(genre);
 		}
 		Author author = book.getAuthor();
+		author.getPublishedBooks().add(book);
 		authorRepository.save(author);
-		
 		Book savedBook = bookRepository.save(book);
-		
 		return savedBook;
+		
+		
 		
 	}
 
