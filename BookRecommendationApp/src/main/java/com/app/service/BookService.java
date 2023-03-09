@@ -6,4 +6,6 @@ import com.app.model.Book;
 public interface BookService {
 
 	public Book addNewBook(Book book);
+	
+	public Book deleteBookById(Integer bookId) throws BookException;
 }
