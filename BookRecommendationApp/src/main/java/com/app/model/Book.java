@@ -2,6 +2,7 @@ package com.app.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -49,7 +50,9 @@ public class Book {
 			name = "book_genre",
 			joinColumns = @JoinColumn(name = "bookId"),
 			inverseJoinColumns = @JoinColumn(name = "genreId"))
-	private List<Genre> genres = new ArrayList<>();
+	private Set<Genre> genres = new HashSet<>();
+	
+	private Set<String> getGenres;
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
