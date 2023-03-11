@@ -45,14 +45,17 @@ public class Book {
 	private String description;
 	
 //	@ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
-	@ManyToMany
+	@ManyToMany(cascade = {
+		    CascadeType.PERSIST,
+		    CascadeType.MERGE
+		})
 	@JoinTable(
 			name = "book_genre",
 			joinColumns = @JoinColumn(name = "bookId"),
 			inverseJoinColumns = @JoinColumn(name = "genreId"))
 	private Set<Genre> genres = new HashSet<>();
 	
-	private Set<String> getGenres;
+	
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
