@@ -9,6 +9,6 @@ import com.app.model.Genre;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer>{
 
-	public boolean findByAuthorName(String authorName);
+	public Optional<Author> findByAuthorName(String authorName);
 	
 }

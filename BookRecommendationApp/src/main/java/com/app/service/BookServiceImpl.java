@@ -31,48 +31,57 @@ public class BookServiceImpl implements BookService{
 	
 	@Override
 	public Book addNewBook(Book book) {
-//		
+		
+		
+//creating new book instance to set values manually		
 		Book newBook = new Book();
-		
-		
-		
-
-		
+	
 		newBook.setBookName(book.getBookName());
 		newBook.setDescription(book.getDescription());
 		newBook.setPages(book.getPages());
 		newBook.setPublishDate(LocalDate.now());
 		
-		Author author = book.getAuthor();
-
-		newBook.setAuthor(author);
-
-		
 		
 		Set<Genre> genres = book.getGenres();
 		for (Genre genre: genres) {
-//			-----------------------------
+//			-------checking if genre already exists or not so that we can create new instance or update existing one
 			Optional<Genre> opt = genreRepository.findByGenreName(genre.getGenreName());
 			if (opt.isEmpty()) {
+				//creating new
 				newBook.getGenres().add(genre);
 				genre.getBooks().add(newBook);
 				genreRepository.save(genre);
 			}
 			else {
+				//updating existing one
 				Genre existinggenre = opt.get();
 				newBook.getGenres().add(existinggenre);
 				existinggenre.getBooks().add(newBook);
 				genreRepository.save(existinggenre);
 			}
 			
-//			-----------------
-//			newBook.getGenres().add(genre);
-//			genre.getBooks().add(newBook);
-//			genreRepository.save(genre);
 		}
 		
-		author.getPublishedBooks().add(newBook);
-		authorRepository.save(author);
+		
+//		-------------checking if genre already exists or not so that we can create new instance or update existing one
+		Optional<Author> opt1 = authorRepository.findByAuthorName(book.getAuthor().getAuthorName());
+		if (opt1.isEmpty()) {
+			//creating new
+			Author author = book.getAuthor();
+
+			newBook.setAuthor(author);
+			author.getPublishedBooks().add(newBook);
+			authorRepository.save(author);
+		}
+		else {
+			//updating existing one
+			Author existingAuthor = opt1.get();
+			newBook.setAuthor(existingAuthor);
+			existingAuthor.getPublishedBooks().add(newBook);
+			authorRepository.save(existingAuthor);
+		}
+		
+		
 		
 		return bookRepository.save(newBook);
 		
