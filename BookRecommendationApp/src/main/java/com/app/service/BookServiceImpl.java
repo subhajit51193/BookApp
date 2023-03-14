@@ -102,5 +102,29 @@ public class BookServiceImpl implements BookService{
 		}
 	}
 
+	@Override
+	public List<Book> getAllBooksByGenreId(Integer genreId) throws BookException {
+		
+		List<Book> list =genreRepository.getBooksByGenreId(genreId);
+		if (list.isEmpty()) {
+			throw new BookException("No book found");
+		}
+		else {
+			return list;
+		}
+	}
+
+	@Override
+	public List<Book> getAllBooksByAuthorId(Integer authorId) throws BookException {
+		
+		List<Book> list = authorRepository.getBooksByAuthorId(authorId);
+		if (list.isEmpty()) {
+			throw new BookException("No Book found");
+		}
+		else {
+			return list;
+		}
+	}
+
 	
 }

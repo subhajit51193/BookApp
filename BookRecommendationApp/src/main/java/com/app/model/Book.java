@@ -45,10 +45,7 @@ public class Book {
 	private String description;
 	
 //	@ManyToMany(mappedBy = "books",fetch = FetchType.LAZY)
-	@ManyToMany(cascade = {
-		    CascadeType.PERSIST,
-		    CascadeType.MERGE
-		})
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name = "book_genre",
 			joinColumns = @JoinColumn(name = "bookId"),

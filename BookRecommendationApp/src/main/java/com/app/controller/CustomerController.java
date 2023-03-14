@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.exception.BookException;
 import com.app.model.Book;
 import com.app.model.Customer;
 import com.app.service.BookService;
@@ -105,7 +106,15 @@ public class CustomerController {
 //	-------------------------------------------------------------------------------
 	
 	
+	@GetMapping("/getBooksByGenre/{genreId}")
+	public ResponseEntity<List<Book>> getBooksByGenrehandler(@PathVariable("genreId") Integer genreId) throws BookException{
+		List<Book> books = bookService.getAllBooksByGenreId(genreId);
+		return new ResponseEntity<List<Book>>(books,HttpStatus.ACCEPTED);
+	}
 	
-	
-	
+	@GetMapping("/getBooksByAuthor/{authorId}")
+	public ResponseEntity<List<Book>> getBooksByAuthorhandler(@PathVariable("authorId") Integer authorId) throws BookException{
+		List<Book> books = bookService.getAllBooksByAuthorId(authorId);
+		return new ResponseEntity<List<Book>>(books,HttpStatus.ACCEPTED);
+	}
 }
