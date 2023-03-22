@@ -66,8 +66,12 @@ public class AppConfig {
 		.and()
 		.formLogin()
 		.and()
-		.httpBasic();
-//		.and().oauth2Login();//addition for future implementation if possible
+		.httpBasic();//end
+		
+		
+//		--------------------addition test
+//		.and().oauth2Login().successHandler(successHandler);//addition for future implementation if possible
+//		--------------------
 
 		return http.build();
 
