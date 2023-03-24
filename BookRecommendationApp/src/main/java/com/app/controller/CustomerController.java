@@ -124,4 +124,10 @@ public class CustomerController {
 		Customer customer = customerService.getMyDetails();
 		return new ResponseEntity<Customer>(customer,HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("/addBookToMyList/{bookId}")
+	public ResponseEntity<Book> addBookToMyListHandler(@PathVariable("bookId") Integer bookId) throws BookException{
+		Book book = bookService.addBookToMyList(bookId);
+		return new ResponseEntity<Book>(book,HttpStatus.ACCEPTED);
+	}
 }

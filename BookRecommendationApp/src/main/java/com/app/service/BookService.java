@@ -14,4 +14,6 @@ public interface BookService {
 	public List<Book> getAllBooksByGenreId(Integer genreId) throws BookException;
 	
 	public List<Book> getAllBooksByAuthorId(Integer authorId) throws BookException;
+	
+	public Book addBookToMyList(Integer bookId) throws BookException;
 }

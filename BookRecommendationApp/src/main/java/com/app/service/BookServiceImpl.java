@@ -7,14 +7,18 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.app.exception.BookException;
+import com.app.exception.CustomerException;
 import com.app.model.Author;
 import com.app.model.Book;
+import com.app.model.Customer;
 import com.app.model.Genre;
 import com.app.repository.AuthorRepository;
 import com.app.repository.BookRepository;
+import com.app.repository.CustomerRepository;
 import com.app.repository.GenreRepository;
 
 @Service
@@ -28,6 +32,9 @@ public class BookServiceImpl implements BookService{
 	
 	@Autowired
 	private GenreRepository genreRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	@Override
 	public Book addNewBook(Book book) {
@@ -124,6 +131,29 @@ public class BookServiceImpl implements BookService{
 		else {
 			return list;
 		}
+	}
+
+	@Override
+	public Book addBookToMyList(Integer bookId) throws BookException {
+		
+		
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		Customer customer = opt.get();
+		System.err.println(customer.getName());
+		Optional<Book> bookOpt = bookRepository.findById(bookId);
+		if (bookOpt.isEmpty()) {
+			throw new BookException("Book Not found...");
+		}
+		else {
+			Book book = bookOpt.get();
+			System.out.println(book.getBookName());
+			customer.getBooks().add(book);
+			customerRepository.save(customer);
+			return book;
+		}
+		
+		
 	}
 
 	

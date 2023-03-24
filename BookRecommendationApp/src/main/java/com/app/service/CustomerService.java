@@ -15,4 +15,6 @@ public interface CustomerService {
 	public List<Customer> getAllCustomerDetails()throws CustomerException;
 
 	public Customer getMyDetails()throws CustomerException;
+	
+	
 }
