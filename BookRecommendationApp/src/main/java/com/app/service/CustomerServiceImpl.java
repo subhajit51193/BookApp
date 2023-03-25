@@ -11,9 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.app.exception.BookException;
 import com.app.exception.CustomerException;
 import com.app.model.Authority;
+import com.app.model.Book;
 import com.app.model.Customer;
+import com.app.repository.BookRepository;
 import com.app.repository.CustomerRepository;
 
 @Service
@@ -21,6 +24,9 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private BookRepository bookRepository;
 	
 	
 	
@@ -66,6 +72,18 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		else {
 			return opt.get();
+		}
+	}
+
+	@Override
+	public List<Customer> getCustomersBasedOnBook(Integer bookId) throws BookException {
+		
+		List<Customer> customers = bookRepository.findCustomersByBookId(bookId);
+		if (customers.isEmpty()) {
+			throw new BookException("No customers found who shortlisted this book");
+		}
+		else {
+			return customers;
 		}
 	}
 

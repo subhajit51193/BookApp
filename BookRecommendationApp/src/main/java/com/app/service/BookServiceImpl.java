@@ -149,6 +149,8 @@ public class BookServiceImpl implements BookService{
 			Book book = bookOpt.get();
 			System.out.println(book.getBookName());
 			customer.getBooks().add(book);
+			book.getCustomers().add(customer);
+			bookRepository.save(book);
 			customerRepository.save(customer);
 			return book;
 		}
