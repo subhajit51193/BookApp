@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.exception.AuthorException;
 import com.app.exception.BookException;
+import com.app.exception.CustomerException;
+import com.app.model.Author;
 import com.app.model.Book;
 import com.app.model.Customer;
 import com.app.service.BookService;
@@ -129,5 +132,11 @@ public class CustomerController {
 	public ResponseEntity<Book> addBookToMyListHandler(@PathVariable("bookId") Integer bookId) throws BookException{
 		Book book = bookService.addBookToMyList(bookId);
 		return new ResponseEntity<Book>(book,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/followAuthor/{authorId}")
+	public ResponseEntity<List<Author>> followAuthorHandler(@PathVariable("authorId") Integer authorId) throws CustomerException, AuthorException{
+		List<Author> list = customerService.followAuthor(authorId);
+		return new ResponseEntity<List<Author>>(list,HttpStatus.ACCEPTED);
 	}
 }

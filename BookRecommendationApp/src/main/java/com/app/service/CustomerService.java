@@ -3,8 +3,10 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 
+import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
+import com.app.model.Author;
 import com.app.model.Customer;
 
 public interface CustomerService {
@@ -18,4 +20,6 @@ public interface CustomerService {
 	public Customer getMyDetails()throws CustomerException;
 	
 	public List<Customer> getCustomersBasedOnBook(Integer bookId)throws BookException;
+	
+	public List<Author> followAuthor(Integer authorId) throws AuthorException,CustomerException;
 }

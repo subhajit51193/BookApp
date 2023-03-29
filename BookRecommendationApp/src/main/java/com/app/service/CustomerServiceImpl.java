@@ -11,11 +11,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
+import com.app.model.Author;
 import com.app.model.Authority;
 import com.app.model.Book;
 import com.app.model.Customer;
+import com.app.repository.AuthorRepository;
 import com.app.repository.BookRepository;
 import com.app.repository.CustomerRepository;
 
@@ -27,6 +30,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private AuthorRepository authorRepository;
 	
 	
 	
@@ -85,6 +91,34 @@ public class CustomerServiceImpl implements CustomerService{
 		else {
 			return customers;
 		}
+	}
+
+	@Override
+	public List<Author> followAuthor(Integer authorId) throws AuthorException,CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			Optional<Author> opt2 = authorRepository.findById(authorId);
+			if (opt2.isEmpty()) {
+				throw new AuthorException("Author not found");
+			}
+			else {
+				Author author = opt2.get();
+				List<Author> authors = customer.getAuthors();
+				authors.add(author);
+				author.getCustomers().add(customer);
+				author.setFollowers((long)author.getCustomers().size());
+				authorRepository.save(author);
+				customerRepository.save(customer);
+				return authors;
+			}
+			
+		}
+		
 	}
 
 
