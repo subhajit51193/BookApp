@@ -22,8 +22,10 @@ import com.app.exception.CustomerException;
 import com.app.model.Author;
 import com.app.model.Book;
 import com.app.model.Customer;
+import com.app.model.Review;
 import com.app.service.BookService;
 import com.app.service.CustomerService;
+import com.app.service.ReviewService;
 
 import jakarta.websocket.server.PathParam;
 
@@ -44,6 +46,9 @@ public class CustomerController {
 //	-----------------------------------------
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private ReviewService reviewService;
 //-------------------------------------------
 	
 	@GetMapping("/hello")
@@ -138,5 +143,11 @@ public class CustomerController {
 	public ResponseEntity<List<Author>> followAuthorHandler(@PathVariable("authorId") Integer authorId) throws CustomerException, AuthorException{
 		List<Author> list = customerService.followAuthor(authorId);
 		return new ResponseEntity<List<Author>>(list,HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/giveReview/{bookId}")
+	public ResponseEntity<Review> giveReviewhandler(@RequestBody Review review,@PathVariable("bookId") Integer bookId) throws BookException{
+		Review newReview = reviewService.addReview(review, bookId);
+		return new ResponseEntity<Review>(newReview,HttpStatus.ACCEPTED);
 	}
 }

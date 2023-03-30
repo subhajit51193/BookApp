@@ -2,6 +2,7 @@ package com.app.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -59,6 +60,10 @@ public class Customer {
 			joinColumns = @JoinColumn(name = "customerId"),
 			inverseJoinColumns = @JoinColumn(name = "authorId"))
 	private List<Author> authors = new ArrayList<>();
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "custId",referencedColumnName = "custId")
+	private Set<Review> myReviews = new HashSet<>();
 
 
 	

@@ -21,6 +21,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +29,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
@@ -61,6 +63,10 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "authorId")
 	private Author author;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "bookId",referencedColumnName = "bookId")
+	private Set<Review> reviews = new HashSet<>();
 
 	
 	
