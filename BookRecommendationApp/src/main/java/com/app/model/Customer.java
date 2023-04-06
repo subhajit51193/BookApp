@@ -61,8 +61,7 @@ public class Customer {
 			inverseJoinColumns = @JoinColumn(name = "authorId"))
 	private List<Author> authors = new ArrayList<>();
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "custId",referencedColumnName = "custId")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "customer")
 	private Set<Review> myReviews = new HashSet<>();
 
 

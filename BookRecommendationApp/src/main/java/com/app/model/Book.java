@@ -64,8 +64,7 @@ public class Book {
 	@JoinColumn(name = "authorId")
 	private Author author;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "bookId",referencedColumnName = "bookId")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "book")
 	private Set<Review> reviews = new HashSet<>();
 
 	
