@@ -48,12 +48,38 @@ public class ReviewServiceImpl implements ReviewService{
 //				solution - change to bidirectional maping book and review , customer and review;
 				
 //				----------------
-				Review newReview = reviewRepository.save(review);
-				book.getReviews().add(newReview);
-				customer.getMyReviews().add(newReview);
-				bookRepository.save(book);
-				customerRepository.save(customer);
-				return newReview;
+//				Review newReview = reviewRepository.save(review);
+//				book.getReviews().add(newReview);
+//				customer.getMyReviews().add(newReview);
+//				bookRepository.save(book);
+//				customerRepository.save(customer);
+//				return newReview;
+				
+//				have to check if it is working or not
+				Optional<Review> optR = reviewRepository.getReviewFromCustomerIdAndBookId(customer.getCustId(), bookId);
+				if (optR.isEmpty()) {
+					review.setBook(book);
+					review.setCustomer(customer);
+					Review newReview = reviewRepository.save(review);
+					book.getReviews().add(newReview);
+					customer.getMyReviews().add(newReview);
+					bookRepository.save(book);
+					customerRepository.save(customer);
+					return newReview;
+				}
+				else {
+					Review foundReview = optR.get();
+					foundReview.setDescription(review.getDescription());
+					foundReview.setRating(review.getRating());
+					foundReview.setSubject(review.getSubject());
+					
+					return reviewRepository.save(foundReview);
+				}
+				
+				
+				
+				
+				
 			}
 		}
 	}
