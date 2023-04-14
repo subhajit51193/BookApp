@@ -39,62 +39,115 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public Book addNewBook(Book book) {
 		
+//		Book newBook = new Book();
+//		newBook.setBookName(book.getBookName());
+//		newBook.setDescription(book.getDescription());
+//		newBook.setPages(book.getPages());
+//		
+//		Set<Genre> genres = book.getGenres();
+//		
+//		for (Genre genre: genres) {
+//			if (genreRepository.findByGenreName(genre.getGenreName()).isEmpty()) {
+//				Genre newGenre = new Genre();
+//				newGenre.setGenreName(genre.getGenreName());
+//				newGenre.getBooks().add(newBook);
+//				newBook.getGenres().add(newGenre);
+//				genreRepository.save(newGenre);
+//			}
+//			else {
+//				Genre oldGenre = genreRepository.findByGenreName(genre.getGenreName()).get();
+//				oldGenre.getBooks().add(newBook);
+//				genreRepository.save(oldGenre);
+//			}
+//			
+//		}
+//		
+//		if (authorRepository.findByAuthorName(book.getAuthor().getAuthorName()).isEmpty()) {
+//			Author newAuthor = new Author();
+//			newAuthor.setAuthorName(book.getAuthor().getAuthorName());
+//			newBook.setAuthor(newAuthor);
+//			newAuthor.getPublishedBooks().add(newBook);
+//			authorRepository.save(newAuthor);
+//		}
+//		else {
+//			Author oldAuthor = authorRepository.findByAuthorName(book.getAuthor().getAuthorName()).get();
+//			oldAuthor.getPublishedBooks().add(newBook);
+//			newBook.setAuthor(oldAuthor);
+//			authorRepository.save(oldAuthor);
+//		}
+//		return bookRepository.save(newBook);
 		
-//creating new book instance to set values manually		
-		Book newBook = new Book();
-	
-		newBook.setBookName(book.getBookName());
-		newBook.setDescription(book.getDescription());
-		newBook.setPages(book.getPages());
-		newBook.setPublishDate(LocalDate.now());
+//		Set<Genre> genres = book.getGenres();
+//		
+//		Author author = book.getAuthor();
+//		for (Genre genre : genres) {
+//			genre.getBooks().add(book);
+//			genreRepository.save(genre);
+//		}
+//		
+//		author.getPublishedBooks().add(book);
+//		book.setAuthor(author);
+//		authorRepository.save(author);
+//		
+//		return bookRepository.save(book);
 		
-		
-		Set<Genre> genres = book.getGenres();
-		for (Genre genre: genres) {
-//			-------checking if genre already exists or not so that we can create new instance or update existing one
-			Optional<Genre> opt = genreRepository.findByGenreName(genre.getGenreName());
-			if (opt.isEmpty()) {
-				//creating new
-				newBook.getGenres().add(genre);
-				genre.getBooks().add(newBook);
-				genreRepository.save(genre);
-			}
-			else {
-				//updating existing one
-				Genre existinggenre = opt.get();
-				newBook.getGenres().add(existinggenre);
-				existinggenre.getBooks().add(newBook);
-				genreRepository.save(existinggenre);
-			}
+		//creating new book instance to set values manually		
+				Book newBook = new Book();
 			
-		}
-		
-		
-//		-------------checking if genre already exists or not so that we can create new instance or update existing one
-		Optional<Author> opt1 = authorRepository.findByAuthorName(book.getAuthor().getAuthorName());
-		if (opt1.isEmpty()) {
-			//creating new
-			Author author = book.getAuthor();
+				newBook.setBookName(book.getBookName());
+				newBook.setDescription(book.getDescription());
+				newBook.setPages(book.getPages());
+				newBook.setPublishDate(LocalDate.now());
+				
+				
+				Set<Genre> genres = book.getGenres();
+				for (Genre genre: genres) {
+//					-------checking if genre already exists or not so that we can create new instance or update existing one
+					Optional<Genre> opt = genreRepository.findByGenreName(genre.getGenreName());
+					if (opt.isEmpty()) {
+						//creating new
+						newBook.getGenres().add(genre);
+						genre.getBooks().add(newBook);
+						genreRepository.save(genre);
+					}
+					else {
+						//updating existing one
+						Genre existinggenre = opt.get();
+						newBook.getGenres().add(existinggenre);
+						existinggenre.getBooks().add(newBook);
+						genreRepository.save(existinggenre);
+					}
+					
+				}
+				
+				
+//				-------------checking if genre already exists or not so that we can create new instance or update existing one
+				Optional<Author> opt1 = authorRepository.findByAuthorName(book.getAuthor().getAuthorName());
+				if (opt1.isEmpty()) {
+					//creating new
+					Author author = book.getAuthor();
 
-			newBook.setAuthor(author);
-			author.getPublishedBooks().add(newBook);
-			authorRepository.save(author);
-		}
-		else {
-			//updating existing one
-			Author existingAuthor = opt1.get();
-			newBook.setAuthor(existingAuthor);
-			existingAuthor.getPublishedBooks().add(newBook);
-			authorRepository.save(existingAuthor);
-		}
+					newBook.setAuthor(author);
+					author.getPublishedBooks().add(newBook);
+					authorRepository.save(author);
+				}
+				else {
+					//updating existing one
+					Author existingAuthor = opt1.get();
+					newBook.setAuthor(existingAuthor);
+					existingAuthor.getPublishedBooks().add(newBook);
+					authorRepository.save(existingAuthor);
+				}
+				
+				
+				
+				return bookRepository.save(newBook);
 		
 		
 		
-		return bookRepository.save(newBook);
 		
 		
 	}
-
 	@Override
 	public Book deleteBookById(Integer bookId) throws BookException {
 		

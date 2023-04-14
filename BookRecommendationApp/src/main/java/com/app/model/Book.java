@@ -29,7 +29,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
