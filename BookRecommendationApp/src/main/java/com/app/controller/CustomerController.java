@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
+import com.app.exception.ReviewException;
 import com.app.model.Author;
 import com.app.model.Book;
 import com.app.model.Customer;
@@ -149,5 +150,19 @@ public class CustomerController {
 	public ResponseEntity<Review> giveReviewhandler(@RequestBody Review review,@PathVariable("bookId") Integer bookId) throws BookException{
 		Review newReview = reviewService.addReview(review, bookId);
 		return new ResponseEntity<Review>(newReview,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/myReviews")
+	public ResponseEntity<List<Review>> getAllMyReviewsHandler() throws CustomerException, ReviewException{
+		
+		List<Review> myReviews = customerService.getAllMyReviews();
+		return new ResponseEntity<List<Review>>(myReviews,HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/myFollowedAuthors")
+	public ResponseEntity<List<Author>> getAllFollowedAuthorshandler() throws CustomerException, AuthorException{
+		
+		List<Author> authors = customerService.getAllFollowedAuthors();
+		return new ResponseEntity<List<Author>>(authors,HttpStatus.ACCEPTED);
 	}
 }

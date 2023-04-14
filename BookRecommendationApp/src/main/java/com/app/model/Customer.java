@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -47,6 +48,7 @@ public class Customer {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer",fetch=FetchType.EAGER)
 	private List<Authority> authorities = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 			name = "Customer_Book",
@@ -54,6 +56,7 @@ public class Customer {
 			inverseJoinColumns = @JoinColumn(name = "bookId"))
 	private List<Book> books = new ArrayList<>();
 	
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 			name = "Customer_Author",
@@ -61,6 +64,7 @@ public class Customer {
 			inverseJoinColumns = @JoinColumn(name = "authorId"))
 	private List<Author> authors = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER,mappedBy = "customer")
 	private Set<Review> myReviews = new HashSet<>();
 

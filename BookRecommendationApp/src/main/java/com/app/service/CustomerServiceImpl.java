@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
+import com.app.exception.ReviewException;
 import com.app.model.Author;
 import com.app.model.Authority;
 import com.app.model.Book;
 import com.app.model.Customer;
+import com.app.model.Review;
 import com.app.repository.AuthorRepository;
 import com.app.repository.BookRepository;
 import com.app.repository.CustomerRepository;
@@ -119,6 +121,47 @@ public class CustomerServiceImpl implements CustomerService{
 			
 		}
 		
+	}
+
+	@Override
+	public List<Review> getAllMyReviews() throws CustomerException, ReviewException {
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			List<Review> myReviews = customerRepository.getAllReviewsByCustId(customer.getCustId());
+			if (myReviews.isEmpty()) {
+				throw new ReviewException("List is empty");
+			}
+			else {
+				return myReviews;
+			}
+			
+			
+		}
+	}
+
+	@Override
+	public List<Author> getAllFollowedAuthors() throws CustomerException, AuthorException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			List<Author> authors = customerRepository.getAllAuthorsByCustId(customer.getCustId());
+			if (authors.isEmpty()) {
+				throw new AuthorException("List is empty");
+			}
+			else {
+				return authors;
+			}
+			
+			
+		}
 	}
 
 
