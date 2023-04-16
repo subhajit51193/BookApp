@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.dto.Dashboard;
 import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
@@ -165,4 +166,12 @@ public class CustomerController {
 		List<Author> authors = customerService.getAllFollowedAuthors();
 		return new ResponseEntity<List<Author>>(authors,HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("/myDashboard")
+	public ResponseEntity<Dashboard> getMyDashboardHandler()throws CustomerException{
+		
+		Dashboard dashboard = customerService.getMyDashboard();
+		return new ResponseEntity<Dashboard>(dashboard,HttpStatus.ACCEPTED);
+	}
+	
 }

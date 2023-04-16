@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.app.dto.Dashboard;
 import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
@@ -159,6 +160,24 @@ public class CustomerServiceImpl implements CustomerService{
 			else {
 				return authors;
 			}
+			
+			
+		}
+	}
+
+	@Override
+	public Dashboard getMyDashboard() throws CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			Dashboard dashboard = new Dashboard();
+			dashboard.setFollowing(customer.getAuthors().size());
+			dashboard.setTotalBooksAddedtoMyList(customer.getBooks().size());
+			return dashboard;
 			
 			
 		}

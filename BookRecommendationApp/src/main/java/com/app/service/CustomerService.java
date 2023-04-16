@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 
+import com.app.dto.Dashboard;
 import com.app.exception.AuthorException;
 import com.app.exception.BookException;
 import com.app.exception.CustomerException;
@@ -28,4 +29,6 @@ public interface CustomerService {
 	public List<Review> getAllMyReviews() throws CustomerException,ReviewException;
 	
 	public List<Author> getAllFollowedAuthors() throws CustomerException,AuthorException;
+	
+	public Dashboard getMyDashboard()throws CustomerException;
 }
