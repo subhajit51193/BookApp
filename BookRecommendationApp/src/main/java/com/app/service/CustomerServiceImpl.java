@@ -24,6 +24,7 @@ import com.app.model.Review;
 import com.app.repository.AuthorRepository;
 import com.app.repository.BookRepository;
 import com.app.repository.CustomerRepository;
+import com.app.repository.ReviewRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -36,6 +37,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private AuthorRepository authorRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	
 	
@@ -178,6 +182,27 @@ public class CustomerServiceImpl implements CustomerService{
 			dashboard.setFollowing(customer.getAuthors().size());
 			dashboard.setTotalBooksAddedtoMyList(customer.getBooks().size());
 			return dashboard;
+			
+			
+		}
+	}
+
+	@Override
+	public List<Review> getReviewSortedDesc() throws CustomerException, ReviewException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			List<Review> myReviews = reviewRepository.sortByRatingDesc(customer.getCustId());
+			if (myReviews.isEmpty()) {
+				throw new ReviewException("List is empty");
+			}
+			else {
+				return myReviews;
+			}
 			
 			
 		}

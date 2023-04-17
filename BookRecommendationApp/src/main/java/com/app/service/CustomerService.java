@@ -31,4 +31,6 @@ public interface CustomerService {
 	public List<Author> getAllFollowedAuthors() throws CustomerException,AuthorException;
 	
 	public Dashboard getMyDashboard()throws CustomerException;
+	
+	public List<Review> getReviewSortedDesc()throws CustomerException,ReviewException;
 }

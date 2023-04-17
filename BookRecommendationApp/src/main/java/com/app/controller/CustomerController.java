@@ -174,4 +174,10 @@ public class CustomerController {
 		return new ResponseEntity<Dashboard>(dashboard,HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/myReviews/desc")
+	public ResponseEntity<List<Review>> sortReviewDescHandler() throws CustomerException, ReviewException{
+		List<Review> reviews = customerService.getReviewSortedDesc();
+		return new ResponseEntity<List<Review>>(reviews,HttpStatus.ACCEPTED);
+	}
+	
 }
