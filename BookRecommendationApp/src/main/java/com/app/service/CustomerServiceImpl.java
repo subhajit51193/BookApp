@@ -25,6 +25,7 @@ import com.app.repository.AuthorRepository;
 import com.app.repository.BookRepository;
 import com.app.repository.CustomerRepository;
 import com.app.repository.ReviewRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -40,6 +41,9 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private ReviewRepository reviewRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	
@@ -203,6 +207,74 @@ public class CustomerServiceImpl implements CustomerService{
 			else {
 				return myReviews;
 			}
+			
+			
+		}
+	}
+
+	@Override
+	public Customer updatePassword(String password) throws CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			customer.setPassword(passwordEncoder.encode(password));
+			Customer updatedCustomer = customerRepository.save(customer);
+			return updatedCustomer;
+			
+			
+		}
+	}
+
+	@Override
+	public Customer updateEmail(String email) throws CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			customer.setEmail(email);
+			Customer updatedCustomer = customerRepository.save(customer);
+			return updatedCustomer;
+			
+			
+		}
+	}
+
+	@Override
+	public Customer updateName(String name) throws CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			customer.setName(name);
+			Customer updatedCustomer = customerRepository.save(customer);
+			return updatedCustomer;
+			
+			
+		}
+	}
+
+	@Override
+	public Customer updateAddress(String address) throws CustomerException {
+		
+		Optional<Customer> opt = customerRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (opt.isEmpty()) {
+			throw new CustomerException("Not found");
+		}
+		else {
+			Customer customer =  opt.get();
+			customer.setAddress(address);
+			Customer updatedCustomer = customerRepository.save(customer);
+			return updatedCustomer;
 			
 			
 		}

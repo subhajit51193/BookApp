@@ -9,11 +9,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.Dashboard;
@@ -180,4 +182,31 @@ public class CustomerController {
 		return new ResponseEntity<List<Review>>(reviews,HttpStatus.ACCEPTED);
 	}
 	
+	@PatchMapping("/updatePassword")
+	public ResponseEntity<Customer> updatePasswordHandler(@RequestParam(required = false) String password)throws CustomerException{
+		
+		Customer updatedCustomer = customerService.updatePassword(password);
+		return new ResponseEntity<Customer>(updatedCustomer,HttpStatus.ACCEPTED);
+	}
+	
+	@PatchMapping("/updateEmail")
+	public ResponseEntity<Customer> updateEmailhandler(@RequestParam(required = false) String email)throws CustomerException{
+		
+		Customer updatedCustomer = customerService.updateEmail(email);
+		return new ResponseEntity<Customer>(updatedCustomer,HttpStatus.ACCEPTED);
+	}
+	
+	@PatchMapping("/updateName")
+	public ResponseEntity<Customer> updateNamehandler(@RequestParam(required = false) String name)throws CustomerException{
+		
+		Customer updatedCustomer = customerService.updateName(name);
+		return new ResponseEntity<Customer>(updatedCustomer,HttpStatus.ACCEPTED);
+	}
+	
+	@PatchMapping("/updateAddress")
+	public ResponseEntity<Customer> updateAddresshandler(@RequestParam(required = false) String address)throws CustomerException{
+		
+		Customer updatedCustomer = customerService.updateAddress(address);
+		return new ResponseEntity<Customer>(updatedCustomer,HttpStatus.ACCEPTED);
+	}
 }

@@ -33,4 +33,13 @@ public interface CustomerService {
 	public Dashboard getMyDashboard()throws CustomerException;
 	
 	public List<Review> getReviewSortedDesc()throws CustomerException,ReviewException;
+	
+	public Customer updatePassword(String password)throws CustomerException;
+	
+	public Customer updateEmail(String email)throws CustomerException;
+	
+	public Customer updateName(String name)throws CustomerException;
+	
+	public Customer updateAddress(String address)throws CustomerException;
+	
 }
